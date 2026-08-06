@@ -1,0 +1,6 @@
+EXEC sp_CreateMarketParticipant
+    @MarketParticipantName = 'Everest Securities Ltd.',
+    @MarketParticipantShortName = 'EVS',
+    @MarketParticipantEmail = 'contact@everest.com',
+    @MarketParticipantType = '1',
+    @Status = '1';

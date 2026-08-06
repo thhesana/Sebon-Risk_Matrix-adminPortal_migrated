@@ -1,0 +1,30 @@
+2025-12-07 10:15:25 - User: thhesana12@gmail.com - Status: Email sending failed
+Output: 'python' is not recognized as an internal or external command,
+operable program or batch file.
+
+============================================================
+Timestamp: 2025-12-07 10:17:18
+Username: petermormusic@gmail.com
+Email: petermormusic@gmail.com
+Command: python "C:\xampp\htdocs\Risk_Matrix\userProfileMailSender.py" "petermormusic@gmail.com" 2>&1
+Return Code: 1
+Status: Email sending failed
+Output:
+'python' is not recognized as an internal or external command,
+operable program or batch file.
+============================================================
+
+============================================================
+Timestamp: 2025-12-07 10:20:13
+Username: napitsaan12@gmail.com
+Email: napitsaan12@gmail.com
+Python Path: python
+Command: "python" "C:\xampp\htdocs\Risk_Matrix\userProfileMailSender.py" "napitsaan12@gmail.com" 2>&1
+Return Code: 1
+Status: Email sending failed
+Output:
+'"python"' is not recognized as an internal or external command,
+operable program or batch file.
+
+============================================================
+

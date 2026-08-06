@@ -1,0 +1,21 @@
+truncate table [RiskMatrix_AML].[dbo].[StockBrokerService];
+
+
+truncate table  [RiskMatrix_AML].[dbo].[IssueAndSalesManagementService];
+
+
+truncate table  [RiskMatrix_AML].[dbo].[PortfolioManagementService];
+
+
+truncate table  [RiskMatrix_AML].[dbo].[BusinessRiskOtherServices];
+
+
+truncate table  [RiskMatrix_AML].[dbo].[InformationRegardingTotalAssets];
+
+truncate table  [RiskMatrix_AML].[dbo].[Annex2_F3Ques_Ans_collection];
+
+
+truncate table  [RiskMatrix_AML].[dbo].[User_OTP];
+
+truncate table  [RiskMatrix_AML].[dbo].[MarketParticipant];
+;

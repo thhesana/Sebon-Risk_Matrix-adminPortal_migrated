@@ -1,0 +1,25 @@
+SELECT 
+    Activity AS ActivityName,
+    ISNULL(CONVERT(VARCHAR(100), MAX(CASE WHEN SubMaster4table_id = 1 THEN Value END)), '-') AS NP_Resident,
+    ISNULL(CONVERT(VARCHAR(100), MAX(CASE WHEN SubMaster4table_id = 2 THEN Value END)), '-') AS NP_NonResident,
+    ISNULL(CONVERT(VARCHAR(100), MAX(CASE WHEN SubMaster4table_id = 3 THEN Value END)), '-') AS LP_Resident,
+    ISNULL(CONVERT(VARCHAR(100), MAX(CASE WHEN SubMaster4table_id = 4 THEN Value END)), '-') AS LP_NonResident
+FROM
+(
+    SELECT 
+        p.SubMaster4table_id,
+        a.Activity,
+        a.ActivityOrder,
+        SUM(a.Value) AS Value
+    FROM RiskMatrix_AML.dbo.PortfolioManagementService p
+    CROSS APPLY (VALUES 
+        ('Discretionary', 1, p.Discretionary),
+        ('Non-Discretionary', 2, p.NonDiscretionary),
+        ('Advisory', 3, p.Advisory),
+        ('Return Guarantee', 4, p.ReturnGuarantee)
+    ) a(Activity, ActivityOrder, Value)
+    WHERE p.Master4table_id = 1003
+    GROUP BY p.SubMaster4table_id, a.Activity, a.ActivityOrder
+) src
+GROUP BY Activity, ActivityOrder
+ORDER BY ActivityOrder;
