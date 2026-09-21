@@ -436,21 +436,24 @@ if ($selectedFiscalYear) {
             $netProfileRisk = calculateNetProfileRisk($structuralRisk, $overallInherentRisk);
             
             // Include every active reporting entity (even with no submitted data / zero scores)
+            // NOTE: risk_category is now derived from Net Profile Risk (not Overall Composite Risk),
+            // per the requested change. Composite Risk is still calculated and shown, but is no
+            // longer the basis for the category badge, rank, or the Highest/Lowest stat cards.
             $summaryData[] = [
                 'market_participant_id' => $marketParticipant_id,
                 'market_participant_name' => $mp['MarketParticipantName'],
                 'market_participant_short' => $mp['MarketParticipantShortName'],
                 'composite_risk' => $overallCompositeRisk,
-                'risk_category' => getRiskCategory($overallCompositeRisk),
+                'risk_category' => getRiskCategory($netProfileRisk),
                 'structural_risk' => $structuralRisk,
                 'inherent_risk' => $overallInherentRisk,
                 'net_profile_risk' => $netProfileRisk
             ];
         }
         
-        // Sort by composite risk in descending order (highest risk first)
+        // Sort by Net Profile Risk in descending order (highest risk first)
         usort($summaryData, function($a, $b) {
-            return $b['composite_risk'] <=> $a['composite_risk'];
+            return $b['net_profile_risk'] <=> $a['net_profile_risk'];
         });
     }
 }
@@ -1616,13 +1619,13 @@ button {
                 
                 <div class="stat-card" style="background: linear-gradient(135deg, #f39c12 0%, #e67e22 100%);">
                     <h4>Highest Risk</h4>
-                    <div class="value"><?php echo number_format($summaryData[0]['composite_risk'], 2); ?></div>
+                    <div class="value"><?php echo number_format($summaryData[0]['net_profile_risk'], 2); ?></div>
                     <p style="font-size: 12px; margin-top: 5px;"><?php echo htmlspecialchars($summaryData[0]['market_participant_short']); ?></p>
                 </div>
                 
                 <div class="stat-card" style="background: linear-gradient(135deg, #27ae60 0%, #229954 100%);">
                     <h4>Lowest Risk</h4>
-                    <div class="value"><?php echo number_format($summaryData[count($summaryData)-1]['composite_risk'], 2); ?></div>
+                    <div class="value"><?php echo number_format($summaryData[count($summaryData)-1]['net_profile_risk'], 2); ?></div>
                     <p style="font-size: 12px; margin-top: 5px;"><?php echo htmlspecialchars($summaryData[count($summaryData)-1]['market_participant_short']); ?></p>
                 </div>
                 
@@ -1630,7 +1633,7 @@ button {
                     <h4>Average Risk</h4>
                     <div class="value">
                         <?php 
-                        $avgRisk = array_sum(array_column($summaryData, 'composite_risk')) / count($summaryData);
+                        $avgRisk = array_sum(array_column($summaryData, 'net_profile_risk')) / count($summaryData);
                         echo number_format($avgRisk, 2); 
                         ?>
                     </div>
